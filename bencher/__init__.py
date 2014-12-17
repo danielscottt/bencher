@@ -6,7 +6,7 @@ class Bencher():
 
     limit = 0
 
-    def __init__(self, func, count = 0):
+    def __init__(self, func):
         self.ops = []
 
         self._sorted = False
@@ -15,7 +15,10 @@ class Bencher():
     def __call__(self, *args, **kwargs):
         for i in range(0,self.limit):
             begin = time()
-            self._func(*args, **kwargs)
+            if not 'ret' in locals():
+                ret = self._func(*args, **kwargs)
+            else:
+                self._func(*args, **kwargs)
             end = time()
             self._add_to_ops(i, begin, end)
         print "%s:" % self._func.__name__
@@ -23,6 +26,7 @@ class Bencher():
         print "  avg op time:		%iμs" % self.avg()
         print "  high op (seq %s):	%iμs" % (self.high()['seq'], int(self.high()['time']))
         print "  low op (seq %s):	%iμs" % (self.low()['seq'], int(self.low()['time']))
+        return ret
 
     def avg(self):
         return self._get_total() / len(self.ops)

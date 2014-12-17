@@ -3,6 +3,8 @@ Bencher
 
 Benchmark some stuff if you want.
 
+[![Build Status](https://travis-ci.org/danielscottt/bencher.svg)](https://travis-ci.org/danielscottt/bencher)
+
 These tests:
 ```python
 from bencher import Bencher
